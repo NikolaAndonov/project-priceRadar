@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { formatPrice, formatDiscount, formatDate, formatRelativeTime } from '../../utils/formatting';
 
 interface Price {
   store: string;
@@ -87,28 +88,30 @@ const PriceComparisonTable: React.FC<PriceComparisonTableProps> = ({ prices }) =
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-bold text-gray-900">{price.currentPrice.toFixed(2)} лв.</div>
+                    <div className="text-sm font-bold text-gray-900">{formatPrice(price.currentPrice)}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">
                       {price.originalPrice !== price.currentPrice ? (
-                        <span className="line-through">{price.originalPrice.toFixed(2)} лв.</span>
+                        <span className="line-through">{formatPrice(price.originalPrice)}</span>
                       ) : (
-                        <span>{price.originalPrice.toFixed(2)} лв.</span>
+                        <span>{formatPrice(price.originalPrice)}</span>
                       )}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {discountPercent > 0 ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-danger-100 text-danger-800">
-                        -{discountPercent}%
+                        {formatDiscount(discountPercent)}
                       </span>
                     ) : (
                       <span className="text-sm text-gray-500">-</span>
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{price.lastUpdated}</div>
+                    <div className="text-sm text-gray-500" title={formatDate(price.lastUpdated)}>
+                      {formatRelativeTime(price.lastUpdated)}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {price.inStock ? (

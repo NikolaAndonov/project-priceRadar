@@ -1,16 +1,10 @@
 import React from 'react';
-import { CheckCircleIcon, ExclamationCircleIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
-
-interface DealAnalysisData {
-  isRealDeal: boolean;
-  lowestPriceEver: number;
-  averagePrice: number;
-  priceVolatility: string;
-  recommendation: string;
-}
+import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { formatPrice } from '../../utils/formatting';
+import { DealAnalysis as DealAnalysisType } from '../../services/productService';
 
 interface DealAnalysisProps {
-  analysis: DealAnalysisData;
+  analysis: DealAnalysisType;
 }
 
 const DealAnalysis: React.FC<DealAnalysisProps> = ({ analysis }) => {
@@ -68,12 +62,12 @@ const DealAnalysis: React.FC<DealAnalysisProps> = ({ analysis }) => {
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-white p-3 rounded-md shadow-sm">
               <div className="text-sm font-medium text-gray-500">Lowest Price Ever</div>
-              <div className="mt-1 text-lg font-semibold text-gray-900">{analysis.lowestPriceEver.toFixed(2)} лв.</div>
+              <div className="mt-1 text-lg font-semibold text-gray-900">{formatPrice(analysis.lowestPriceEver)}</div>
             </div>
             
             <div className="bg-white p-3 rounded-md shadow-sm">
               <div className="text-sm font-medium text-gray-500">Average Price</div>
-              <div className="mt-1 text-lg font-semibold text-gray-900">{analysis.averagePrice.toFixed(2)} лв.</div>
+              <div className="mt-1 text-lg font-semibold text-gray-900">{formatPrice(analysis.averagePrice)}</div>
             </div>
             
             <div className="bg-white p-3 rounded-md shadow-sm">

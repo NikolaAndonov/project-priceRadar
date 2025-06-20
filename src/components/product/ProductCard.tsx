@@ -3,60 +3,57 @@ import { Link } from 'react-router-dom';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
-
-interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  image: string;
-  currentPrice: number;
-  originalPrice: number;
-  discount: number;
-  store: string;
-  unit: string;
-  isRealDeal: boolean;
-}
+import { Product } from '../../services/productService';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  // Temporarily disable favorites functionality until we fix the hooks
+  const isProductFavorite = false;
+  const isLoading = false;
 
-  const toggleFavorite = (e: React.MouseEvent) => {
+  const handleToggleFavorite = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
+    // Temporarily disabled
   };
 
   return (
-    <Link to={`/product/${product.id}`} className="card group">
+    <Link 
+      to={`/product/${product.id}`} 
+      className="card group"
+    >
       <div className="relative">
         {/* Product Image */}
         <div className="aspect-w-1 aspect-h-1 bg-gray-200 overflow-hidden">
           <img
-            src={product.image}
+            src={product.image || '/images/placeholder.svg'}
             alt={product.name}
             className="w-full h-full object-center object-cover group-hover:opacity-90"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=No+Image';
+              (e.target as HTMLImageElement).src = '/images/placeholder.svg';
             }}
           />
         </div>
 
         {/* Discount Badge */}
-        <div className="absolute top-2 left-2 bg-danger-600 text-white text-xs font-bold px-2 py-1 rounded">
-          -{product.discount}%
-        </div>
+        {product.discount > 0 && (
+          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+            -{product.discount}%
+          </div>
+        )}
 
         {/* Favorite Button */}
         <button
-          onClick={toggleFavorite}
-          className="absolute top-2 right-2 p-1 rounded-full bg-white/80 hover:bg-white"
+          onClick={handleToggleFavorite}
+          disabled={isLoading}
+          className="absolute top-2 right-2 p-1 rounded-full bg-white/80 hover:bg-white disabled:opacity-50"
+          aria-label={isProductFavorite ? "Remove from favorites" : "Add to favorites"}
         >
-          {isFavorite ? (
-            <HeartSolidIcon className="h-5 w-5 text-danger-500" />
+          {isProductFavorite ? (
+            <HeartSolidIcon className="h-5 w-5 text-red-500" />
           ) : (
             <HeartIcon className="h-5 w-5 text-gray-500" />
           )}
@@ -77,16 +74,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Price */}
         <div className="flex items-end gap-2 mb-2">
-          <span className="text-lg font-bold text-gray-900">{product.currentPrice.toFixed(2)} лв.</span>
-          <span className="text-sm text-gray-500 line-through">{product.originalPrice.toFixed(2)} лв.</span>
+          <span className="text-lg font-bold text-gray-900">${product.currentPrice.toFixed(2)}</span>
+          {product.originalPrice > product.currentPrice && (
+            <span className="text-sm text-gray-500 line-through">${product.originalPrice.toFixed(2)}</span>
+          )}
         </div>
 
         {/* Real Deal Indicator */}
         <div className="flex items-center text-xs">
           {product.isRealDeal ? (
             <>
-              <CheckCircleIcon className="h-4 w-4 text-success-500 mr-1" />
-              <span className="text-success-700">Real deal</span>
+              <CheckCircleIcon className="h-4 w-4 text-green-500 mr-1" />
+              <span className="text-green-700">Real deal</span>
             </>
           ) : (
             <>

@@ -1,38 +1,50 @@
 import React, { useState } from 'react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
   const [query, setQuery] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      onSearch(query.trim());
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </div>
+      <div className={`relative transition-all duration-300 ${isFocused ? 'scale-105' : ''}`}>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-          placeholder="Search for products (e.g., olive oil, toilet paper)"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder="Search for products..."
+          className="w-full px-4 py-2 pr-10 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent bg-white bg-opacity-95 backdrop-filter backdrop-blur-sm shadow-sm transition-all duration-300"
+          aria-label="Search"
         />
         <button
           type="submit"
-          className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-white bg-primary-600 rounded-r-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-primary-600 transition-colors duration-200"
+          aria-label="Search"
         >
-          Search
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
         </button>
       </div>
     </form>

@@ -1,106 +1,99 @@
-# PriceRadar.bg
+# PriceRadar
 
-A modern, data-driven website for comparing and analyzing real promotions in major retail stores in Bulgaria. The platform helps everyday consumers save money by tracking genuine discounts on groceries and household items across different chains like Lidl, Kaufland, Billa, Fantastico, T Market, and more.
+PriceRadar is a price comparison web application that helps users find the best deals on products across multiple online stores. The application allows users to search for products, compare prices, view price history, set price alerts, and save favorite products.
 
 ## Features
 
-🧠 **Search and Compare Tool**  
-- Powerful search bar on homepage and header  
-- Filter by category (e.g., Dairy, Beverages, Meat, Snacks, Cleaning, etc.)  
-- Display matching products with images, descriptions, and prices from different retailers  
-- Sort results by price, discount, or name
-
-📊 **Price Comparison Table**  
-- For each product, show prices in major stores  
-- Highlight the lowest price  
-- Show if the price is a discount or regular price  
-- Display when the price was last updated
-
-📈 **Price History Chart**  
-- Interactive chart showing the price of a product over the last 4-8 weeks  
-- Line graph format  
-- Compare prices across different stores over time
-
-🔔 **Price Alerts / Wishlist**  
-- Users can "follow" a product  
-- Get notified when its price drops under a chosen threshold  
-- "Add to My List" button on every product page
-
-📍 **Store Filter**  
-- Filter results by preferred chains  
-- Option to exclude unavailable products
-
-🔥 **Top Deals Section**  
-- Homepage features a list of the most impressive real discounts of the week  
-- Based on price drop % and popularity
-
-🧾 **Product Page**  
-- Includes product image, name, brand, and size  
-- Shows all stores where it is available and their respective prices  
-- Shows price history and "Is this a real deal?" verdict  
-- Includes nutritional info or labels when available
-
-📱 **Mobile-First Design**  
-- Responsive, lightweight and easy to use on mobile  
-- Sticky search bar and quick filters
+- **Product Search**: Search for products across multiple online stores
+- **Price Comparison**: Compare prices from different retailers
+- **Price History**: View price trends and history charts
+- **Price Alerts**: Set notifications for when prices drop to a target level
+- **User Authentication**: Register, login, and manage your account
+- **Favorites**: Save and manage your favorite products
+- **Deal Analysis**: Get insights on whether a deal is actually good based on price history
+- **Category Browsing**: Browse products by categories
 
 ## Tech Stack
 
-- React
-- TypeScript
-- Tailwind CSS
-- React Router
-- Chart.js / React-Chartjs-2
-- Headless UI
-- Heroicons
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Supabase (Authentication, Database, Storage)
+- **State Management**: React Context API
+- **Routing**: React Router
+- **Build Tool**: Vite
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v14 or later)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/price-radar.git
-cd price-radar
+git clone https://github.com/yourusername/project-priceRadar.git
+cd project-priceRadar
 ```
 
 2. Install dependencies
 ```bash
 npm install
-# or
-yarn
 ```
 
-3. Start the development server
+3. Create a `.env.local` file in the root directory with your Supabase credentials
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+4. Start the development server
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+## Supabase Setup
+
+1. Create a new project in Supabase
+2. Set up the following tables:
+   - profiles
+   - products
+   - categories
+   - stores
+   - prices
+   - price_history
+   - favorites
+   - price_alerts
+
+3. Enable authentication with email/password
 
 ## Project Structure
 
 ```
-src/
-├── assets/          # Images, icons, and other static files
-├── components/      # Reusable UI components
-│   ├── layout/      # Layout components (Header, Footer, etc.)
-│   ├── product/     # Product-related components
-│   ├── search/      # Search-related components
-│   └── ui/          # Generic UI components
-├── context/         # React context providers
-├── hooks/           # Custom React hooks
-├── pages/           # Page components
-├── services/        # API services and data fetching
-└── utils/           # Utility functions
+project-priceRadar/
+├── public/             # Static assets
+├── src/
+│   ├── assets/         # Images, icons, etc.
+│   ├── components/     # Reusable components
+│   ├── context/        # React context providers
+│   ├── hooks/          # Custom React hooks
+│   ├── pages/          # Page components
+│   ├── services/       # API and service functions
+│   ├── utils/          # Utility functions
+│   ├── App.tsx         # Main App component
+│   └── main.tsx        # Entry point
+├── .env.local          # Environment variables
+├── index.html          # HTML template
+└── package.json        # Project dependencies
 ```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
@@ -108,5 +101,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- All retail stores mentioned are trademarks of their respective owners
-- This project is for educational purposes and is not affiliated with any retail store 
+- [React](https://reactjs.org/)
+- [Supabase](https://supabase.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/) 
